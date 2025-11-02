@@ -48,6 +48,30 @@ class Qdrant {
             throw err;
         }
     }
+
+    async deleteCollection(options) {
+        try {
+            return await quadrantUtils.deleteCollection(
+                this.host,
+                this.port,
+                options
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async upsert(options) {
+        try {
+            return await quadrantUtils.upsert(
+                this.host,
+                this.port,
+                options
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = Qdrant;

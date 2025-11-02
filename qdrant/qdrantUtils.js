@@ -77,8 +77,68 @@ async function getCollection(host, port, options) {
     }
 }
 
+async function deleteCollection(host, port, options) {
+    try {
+        if (!typeUtils.isNonEmptyString(host)) {
+            throw 'Invalid host provided for Qdrant';
+        }
+
+        if (!typeUtils.isPositiveInteger(port)) {
+            throw 'Invalid port provided for Qdrant';
+        }
+
+        qdrantValidationUtils.validateDeleteCollectionOptions(options);
+
+        const client = new qdrantExternalClient.QdrantClient({ 
+            host, 
+            port 
+        });
+
+        return await client.deleteCollection(options.collectionName);
+    } catch(err) {
+        throw err;
+    }
+}
+
+async function upsert(host, port, options) {
+    try {
+        if (!typeUtils.isNonEmptyString(host)) {
+            throw 'Invalid host provided for Qdrant';
+        }
+
+        if (!typeUtils.isPositiveInteger(port)) {
+            throw 'Invalid port provided for Qdrant';
+        }
+
+        qdrantValidationUtils.validateUpsertOptions(options);
+        
+        const client = new qdrantExternalClient.QdrantClient({ 
+            host, 
+            port 
+        });
+
+        const points = [];
+        for (const vector of options.vectors) {
+            points.push({
+                id: vector.id,
+                vector: vector.vector,
+                payload: vector.metaData || {}
+            });
+        }
+
+        return await client.upsert(options.collectionName, {
+            wait: true,
+            points
+        });
+    } catch(err) {
+        throw err;
+    }
+}
+
 module.exports = {
     createCollection,
     getCollections,
-    getCollection
+    getCollection,
+    deleteCollection,
+    upsert
 };

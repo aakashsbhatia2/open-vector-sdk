@@ -39,6 +39,22 @@ class OpenVector {
             throw err;
         }
     }
+
+    async deleteCollection(options) {
+        try {
+            return await this.client.deleteCollection(options);
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async upsert(options) {
+        try {
+            return await this.client.upsert(options);
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = OpenVector;
