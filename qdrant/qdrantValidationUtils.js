@@ -1,7 +1,7 @@
 const typeUtils = require('../commonUtils/typeUtils');
 const qdrantConstants = require('./qdrantConstants');
 
-function validateQdrantCollectionsOptions(options) {
+function validateQdrantCreateCollectionsOptions(options) {
     if (!typeUtils.isNonEmptyString(options?.collectionName)) {
         throw 'Invalid or missing collectionName in qdrant collection options';
     }
@@ -15,6 +15,13 @@ function validateQdrantCollectionsOptions(options) {
     }
 }
 
+function validateGetCollectionOptions(options) {
+    if (!typeUtils.isNonEmptyString(options?.collectionName)) {
+        throw 'Invalid or missing collectionName in qdrant get collection options';
+    }
+}
+
 module.exports = {
-    validateQdrantCollectionsOptions
+    validateQdrantCreateCollectionsOptions,
+    validateGetCollectionOptions
 };

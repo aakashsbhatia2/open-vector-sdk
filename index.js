@@ -23,6 +23,22 @@ class OpenVector {
             throw err;
         }
     }
+
+    async getCollections() {
+        try {
+            return await this.client.getCollections();
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async getCollection(options) {
+        try {
+            return await this.client.getCollection(options);
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = OpenVector;

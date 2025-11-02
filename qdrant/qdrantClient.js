@@ -25,6 +25,29 @@ class Qdrant {
             throw err;
         }
     }
+
+    async getCollections() {
+        try {
+            return await quadrantUtils.getCollections(
+                this.host,
+                this.port
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async getCollection(options) {
+        try {
+            return await quadrantUtils.getCollection(
+                this.host,
+                this.port,
+                options
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = Qdrant;
