@@ -1,0 +1,23 @@
+{
+  "name": "open-vector-sdk",
+  "version": "1.0.0",
+  "description": "SDK for open vector",
+  "homepage": "https://github.com/aakashsbhatia2/open-vector-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/aakashsbhatia2/open-vector-sdk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakashsbhatia2/open-vector-sdk.git"
+  },
+  "license": "ISC",
+  "author": "Aakash Bhatia",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.15.1"
+  }
+}
