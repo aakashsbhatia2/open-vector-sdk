@@ -61,9 +61,21 @@ class Qdrant {
         }
     }
 
-    async upsert(options) {
+    async upsertVector(options) {
         try {
-            return await quadrantUtils.upsert(
+            return await quadrantUtils.upsertVector(
+                this.host,
+                this.port,
+                options
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async deleteVectors(options) {
+        try {
+            return await quadrantUtils.deleteVectors(
                 this.host,
                 this.port,
                 options

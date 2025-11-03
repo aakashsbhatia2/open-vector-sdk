@@ -48,9 +48,17 @@ class OpenVector {
         }
     }
 
-    async upsert(options) {
+    async upsertVector(options) {
         try {
-            return await this.client.upsert(options);
+            return await this.client.upsertVector(options);
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async deleteVectors(options) {
+        try {
+            return await this.client.deleteVectors(options);
         } catch(err) {
             throw err;
         }

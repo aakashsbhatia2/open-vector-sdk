@@ -27,7 +27,7 @@ function validateDeleteCollectionOptions(options) {
     }
 }
 
-function validateUpsertOptions(options) {
+function validateUpsertVectorOptions(options) {
     if (!typeUtils.isNonEmptyString(options?.collectionName)) {
         throw 'Invalid or missing collectionName in qdrant upsert options';
     }
@@ -49,9 +49,20 @@ function validateUpsertOptions(options) {
     }
 }
 
+function validateDeleteVectorsOptions(options) {
+    if (!typeUtils.isNonEmptyString(options?.collectionName)) {
+        throw 'Invalid or missing collectionName in qdrant delete vector options';
+    }
+
+    if (!typeUtils.isNonEmptyArray(options?.ids)) {
+        throw 'Invalid or missing ids array in qdrant delete vector options';
+    }
+}
+
 module.exports = {
     validateQdrantCreateCollectionsOptions,
     validateGetCollectionOptions,
-    validateUpsertOptions,
-    validateDeleteCollectionOptions
+    validateUpsertVectorOptions,
+    validateDeleteCollectionOptions,
+    validateDeleteVectorsOptions
 };

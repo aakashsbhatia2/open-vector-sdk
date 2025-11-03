@@ -100,7 +100,7 @@ async function deleteCollection(host, port, options) {
     }
 }
 
-async function upsert(host, port, options) {
+async function upsertVector(host, port, options) {
     try {
         if (!typeUtils.isNonEmptyString(host)) {
             throw 'Invalid host provided for Qdrant';
@@ -110,7 +110,7 @@ async function upsert(host, port, options) {
             throw 'Invalid port provided for Qdrant';
         }
 
-        qdrantValidationUtils.validateUpsertOptions(options);
+        qdrantValidationUtils.validateUpsertVectorOptions(options);
         
         const client = new qdrantExternalClient.QdrantClient({ 
             host, 
@@ -135,10 +135,36 @@ async function upsert(host, port, options) {
     }
 }
 
+async function deleteVectors(host, port, options) {
+    try {
+        if (!typeUtils.isNonEmptyString(host)) {
+            throw 'Invalid host provided for Qdrant';
+        }
+
+        if (!typeUtils.isPositiveInteger(port)) {
+            throw 'Invalid port provided for Qdrant';
+        }
+
+        qdrantValidationUtils.validateDeleteVectorsOptions(options);
+
+        const client = new qdrantExternalClient.QdrantClient({ 
+            host, 
+            port 
+        });
+
+        return await client.delete(options.collectionName, {
+            points: options.ids,
+        });
+    } catch(err) {
+        throw err;
+    }
+}       
+
 module.exports = {
     createCollection,
     getCollections,
     getCollection,
     deleteCollection,
-    upsert
+    upsertVector,
+    deleteVectors
 };
