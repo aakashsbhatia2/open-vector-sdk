@@ -11,3 +11,7 @@ Development plan:
   - Manage database collections (Create, Delete)
   - Manage vectors (Create, Update, Delete)
   - Search (Search collections for RAG)
+
+## Contributing
+
+Still figuring things out... If you find this interesting and would like to contribute, please do not hesitate to reach out!
