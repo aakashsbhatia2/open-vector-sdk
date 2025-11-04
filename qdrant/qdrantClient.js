@@ -84,6 +84,18 @@ class Qdrant {
             throw err;
         }
     }
+
+    async search(options) {
+        try {
+            return await quadrantUtils.search(
+                this.host,
+                this.port,
+                options
+            );
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = Qdrant;

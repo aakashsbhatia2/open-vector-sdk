@@ -59,10 +59,30 @@ function validateDeleteVectorsOptions(options) {
     }
 }
 
+function validateSearchOptions(options) {
+    if (!typeUtils.isNonEmptyString(options?.collectionName)) {
+        throw 'Invalid or missing collectionName in qdrant search options';
+    }
+
+    if (!typeUtils.isNonEmptyArray(options?.queryVector)) {
+        throw 'Invalid or missing vector array in qdrant search options';
+    }
+
+    if ('topK' in options 
+        && (
+            !typeUtils.isPositiveInteger(options.topK)
+            || options.topK > 1000
+        )
+    ) {
+        throw 'Invalid topK in qdrant search options';
+    }
+}    
+
 module.exports = {
     validateQdrantCreateCollectionsOptions,
     validateGetCollectionOptions,
     validateUpsertVectorOptions,
     validateDeleteCollectionOptions,
-    validateDeleteVectorsOptions
+    validateDeleteVectorsOptions,
+    validateSearchOptions
 };

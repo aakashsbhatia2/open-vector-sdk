@@ -63,6 +63,14 @@ class OpenVector {
             throw err;
         }
     }
+
+    async search(options) {
+        try {
+            return await this.client.search(options);
+        } catch(err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = OpenVector;

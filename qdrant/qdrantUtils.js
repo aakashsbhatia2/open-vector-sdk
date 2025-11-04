@@ -160,11 +160,40 @@ async function deleteVectors(host, port, options) {
     }
 }       
 
+async function search(host, port, options) {
+    try {
+        if (!typeUtils.isNonEmptyString(host)) {
+            throw 'Invalid host provided for Qdrant';
+        }
+
+        if (!typeUtils.isPositiveInteger(port)) {
+            throw 'Invalid port provided for Qdrant';
+        }
+
+        qdrantValidationUtils.validateSearchOptions(options);
+
+        const client = new qdrantExternalClient.QdrantClient({ 
+            host, 
+            port 
+        });
+
+        const topK = Math.min(options.topK || 10, 1000);
+
+        return await client.search(options.collectionName, {
+            vector: options.queryVector,
+            limit: options.topK,
+        });
+    } catch(err) {
+        throw err;
+    }
+}
+
 module.exports = {
     createCollection,
     getCollections,
     getCollection,
     deleteCollection,
     upsertVector,
-    deleteVectors
+    deleteVectors,
+    search
 };
