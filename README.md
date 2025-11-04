@@ -1,6 +1,6 @@
 # Open Vector SDK
 
-Open vector is currently in development. It is open source and free to use. It is an attempt to standardize open source vector databases. It is a generic SDK that can be used to interact with multiple open source vector databases.
+Open vector is currently in development. It is open source and free to use [not stable yet...]. It is an attempt to standardize open source vector databases. It is a generic SDK that can be used to interact with multiple open source vector databases.
 
 ## Supported Vector Databases:
 - [Qdrant](https://qdrant.tech/documentation/)
