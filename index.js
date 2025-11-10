@@ -1,15 +1,30 @@
-const quadrantClient = require('./qdrant/qdrantClient');
-const OpenVectorConstants = require('./openVector/openVectorConstants');
+const openVectorConstants = require('./openVector/openVectorConstants');
+const qdrantValidationUtils = require('./qdrant/qdrantValidationUtils');
+const pgVectorValidationUtils = require('./pgVector/pgVectorValidationUtils');
+
+const typeUtils = require('./commonUtils/typeUtils');
 
 class OpenVector {
-    constructor({ provider, config }) {
+    constructor(initConfig) {
+        if (!typeUtils.isObject(initConfig)) throw 'Invalid Init Config';
+        const { provider, config } = initConfig;
+
+        if (!typeUtils.isNonEmptyString(provider) 
+            || !Object.values(openVectorConstants.SUPPORTED_VECTOR_DBS).includes(provider)
+        ) throw 'Invalid or unsupported provider';
+    
         this.provider = provider
         this.config = config;
-        this.client = null;
+        this.db = null;
 
         switch (provider) {
-            case OpenVectorConstants.SUPPORTED_VECTOR_DBS.QDRANT:
-                this.client = new quadrantClient(this.config);
+            case openVectorConstants.SUPPORTED_VECTOR_DBS.QDRANT:
+                qdrantValidationUtils.validateQdrantConfig(this.config);
+                this.db = openVectorConstants.DB_UTILS_MAP[provider];
+                break;
+            case openVectorConstants.SUPPORTED_VECTOR_DBS.PG_VECTOR:
+                pgVectorValidationUtils.validatePgVectorConfig(this.config);
+                this.db = openVectorConstants.DB_UTILS_MAP[provider];
                 break;
             default:
                 throw new Error(`Unsupported provider: ${provider}`);
@@ -18,7 +33,7 @@ class OpenVector {
 
     async createCollection(options) {
         try {
-            return await this.client.createCollection(options);
+            return await this.db.createCollection(this.config, options);
         } catch(err) {
             throw err;
         }
@@ -26,7 +41,7 @@ class OpenVector {
 
     async getCollections() {
         try {
-            return await this.client.getCollections();
+            return await this.db.getCollections(this.config);
         } catch(err) {
             throw err;
         }
@@ -34,7 +49,7 @@ class OpenVector {
 
     async getCollection(options) {
         try {
-            return await this.client.getCollection(options);
+            return await this.db.getCollection(this.config, options);
         } catch(err) {
             throw err;
         }
@@ -42,7 +57,7 @@ class OpenVector {
 
     async deleteCollection(options) {
         try {
-            return await this.client.deleteCollection(options);
+            return await this.db.deleteCollection(this.config, options);
         } catch(err) {
             throw err;
         }
@@ -50,7 +65,7 @@ class OpenVector {
 
     async upsertVector(options) {
         try {
-            return await this.client.upsertVector(options);
+            return await this.db.upsertVector(this.config, options);
         } catch(err) {
             throw err;
         }
@@ -58,7 +73,7 @@ class OpenVector {
 
     async deleteVectors(options) {
         try {
-            return await this.client.deleteVectors(options);
+            return await this.db.deleteVectors(this.config, options);
         } catch(err) {
             throw err;
         }
@@ -66,7 +81,7 @@ class OpenVector {
 
     async search(options) {
         try {
-            return await this.client.search(options);
+            return await this.db.search(this.config, options);
         } catch(err) {
             throw err;
         }

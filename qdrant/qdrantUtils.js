@@ -2,15 +2,10 @@ const qdrantExternalClient = require('@qdrant/js-client-rest');
 const typeUtils = require('../commonUtils/typeUtils');
 const qdrantValidationUtils = require('./qdrantValidationUtils');
 
-async function createCollection(host, port, options) {
+async function createCollection(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateQdrantCreateCollectionsOptions(options);
 
@@ -33,15 +28,10 @@ async function createCollection(host, port, options) {
     }
 }
 
-async function getCollections(host, port) {
+async function getCollections(config) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         const client = new qdrantExternalClient.QdrantClient({ 
             host, 
@@ -54,15 +44,10 @@ async function getCollections(host, port) {
     }
 }
 
-async function getCollection(host, port, options) {
+async function getCollection(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateGetCollectionOptions(options);
 
@@ -77,15 +62,10 @@ async function getCollection(host, port, options) {
     }
 }
 
-async function deleteCollection(host, port, options) {
+async function deleteCollection(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateDeleteCollectionOptions(options);
 
@@ -100,15 +80,10 @@ async function deleteCollection(host, port, options) {
     }
 }
 
-async function upsertVector(host, port, options) {
+async function upsertVector(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateUpsertVectorOptions(options);
         
@@ -135,15 +110,10 @@ async function upsertVector(host, port, options) {
     }
 }
 
-async function deleteVectors(host, port, options) {
+async function deleteVectors(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateDeleteVectorsOptions(options);
 
@@ -160,15 +130,10 @@ async function deleteVectors(host, port, options) {
     }
 }       
 
-async function search(host, port, options) {
+async function search(config, options) {
     try {
-        if (!typeUtils.isNonEmptyString(host)) {
-            throw 'Invalid host provided for Qdrant';
-        }
-
-        if (!typeUtils.isPositiveInteger(port)) {
-            throw 'Invalid port provided for Qdrant';
-        }
+        qdrantValidationUtils.validateQdrantConfig(config);
+        const { host, port } = config;
 
         qdrantValidationUtils.validateSearchOptions(options);
 
@@ -181,7 +146,7 @@ async function search(host, port, options) {
 
         return await client.search(options.collectionName, {
             vector: options.queryVector,
-            limit: options.topK,
+            limit: topK,
         });
     } catch(err) {
         throw err;

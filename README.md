@@ -4,6 +4,7 @@ Open vector is currently in development. It is open source and free to use [not 
 
 ## Supported Vector Databases:
 - [Qdrant](https://qdrant.tech/documentation/)
+- [pgvector](https://github.com/pgvector/pgvector) (**In Progress**)
 
 ## Developement plan
 Development plan:

@@ -1,6 +1,11 @@
 const typeUtils = require('../commonUtils/typeUtils');
 const qdrantConstants = require('./qdrantConstants');
 
+function validateQdrantConfig(config) {
+    if (!typeUtils.isNonEmptyString(config?.host)) throw 'Invalid or missing host in Qdrant config';
+    if (!typeUtils.isPositiveInteger(config.port)) throw 'Invalid or missing port in Qdrant config';
+}
+
 function validateQdrantCreateCollectionsOptions(options) {
     if (!typeUtils.isNonEmptyString(options?.collectionName)) {
         throw 'Invalid or missing collectionName in qdrant collection options';
@@ -79,6 +84,7 @@ function validateSearchOptions(options) {
 }    
 
 module.exports = {
+    validateQdrantConfig,
     validateQdrantCreateCollectionsOptions,
     validateGetCollectionOptions,
     validateUpsertVectorOptions,
